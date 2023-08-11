@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="background: #3c8dbc">
+            <h2 align="center" style="color: white;">Sucursal</h2>
+        </div>
+        <div class="panel-body">
+            <div class="btn-group btn-group-justified btn-group-raised">
+                {% for rol in menu if rol.mnu_url == 'Sucursal' %}
+                    {% if rol.rol_insert == 1 %}
+                        <a href="{{ path('AgregarSucursal') }}" id="Agregar" class="btn btn-raised btn-primary"><span class="fa fa-plus-circle"></span><span class="hidden-xs"> Agregar</span></a>
+                    {% endif %}
+                {% endfor %}
+                <a href="{{ path('Inicio') }}" class="btn btn-raised btn-primary"><span class="glyphicon glyphicon-home"></span><span class="hidden-xs"> Inicio</span></a>
+            </div>
+            <br>
+            <div>
+                <button data-toggle='tooltip' title='Exportar Sucursales' id='Exportar' class='btn btn-raised btn-success'><span class='fa fa-arrow-circle-down'></span><span class='hidden-xs'> Exportar</span></button>
+            </div>
+            <br>
+            <div class="table-responsive" id="catalogo"> </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/app_js/Catalogos_Sucursal.js') }}"></script>
+{% endblock %}

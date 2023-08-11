@@ -1,0 +1,15 @@
+<label for="cve_prodserv">PRODUCTOS/SERVICIOS:</label>
+<select class="form-control selectpicker" name="cve_prodserv" id="cve_prodserv" data-live-search="true">
+    <option value="">-- Seleccione --</option>
+    {% for cve_prodserv in cves_prodserv %}
+        <option value="{{ cve_prodserv.claveProdServ }}">{{ cve_prodserv.descripcion }}</option>
+    {% endfor %}
+</select>
+
+{% block javascripts %}
+<script>
+    $('#cve_prodserv').selectpicker({
+      size: 6
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% for rol in menu if rol.mnu_url == 'ProductosSucursales' %}
+    <div class="table-responsive">
+        <table class="table table-bordered" cellspacing="0" id="table">
+            <caption style="background: #3c8dbc; color: white; text-align: center;"><span class="fa fa-list-ul"></span><span class="hidden-xs"> LISTADO DE PRODUCTOS</span></caption> 
+            <thead>
+                <tr>
+                    <th><b>Codigo</b></th>
+                    <th><b>Nombre</b></th>
+                    <th><b>Precio</b></th>
+                    <th><b>IVA</b></th>
+                    {% if rol.rol_delete == 1 %}
+                        <th><b>Activo</b></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% set no = 1 %}
+                {% for prod in productos %}
+                    {% set clase = "danger" %}
+                    {% if prod.activo == 1 %}
+                        {% set clase = "success" %}  
+                    {% endif %}
+                    <tr class="{{ clase }}">
+                        <td>{{ prod.Id_Producto }}</td>
+                        <td>
+                            {% if  prod.activo == 1 and rol.rol_update == 1 %}
+                                <a id="Modificar" data-id="{{ prod.Id_Producto }}" style="cursor: pointer;">{{ prod.Nombre }}</a>
+                            {% else %}
+                                {{ prod.Nombre }}
+                            {% endif %}
+                        </td>
+                        <td>{{ prod.Precio }}</td>
+                        <td>{{ prod.IVA }}</td>
+                        {% if rol.rol_delete == 1 %}
+                            {% set checked = "unchecked" %}
+                            {% if prod.activo == 1 %}
+                                {% set checked = "checked" %}
+                            {% endif %}
+                            <td><input type="checkbox" id="activar_desactivar" {{ checked }} data-id="{{ prod.Id_Producto }}" data-nom="{{ prod.Nombre }}"/></td>
+                        {% endif %}
+                    </tr>
+                    {% set no = no + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endfor %}
+                        
+{% block javascript %}
+    <script src="{{ asset('public/js/app_js/Catalogos_TablaProductosSucursales.js') }}"></script>
+    <script>
+        $("#table").DataTable({
+            "language": {
+                "url": "{{ asset('public/js/Spanish.js') }}"
+            },
+        });
+    </script>
+{% endblock %}

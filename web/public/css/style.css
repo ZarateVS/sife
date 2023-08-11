@@ -1,0 +1,44 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+#login {
+    width: 10%;
+    margin: 5% auto;
+    min-width: 350px;
+}
+
+#login h5 {
+    background-color: #282830;
+    border-radius: 20px 20px 0 0;
+    color: #fff;
+    font-size: 19px;
+    width: 100%;
+    min-width: 350px;
+    padding: 5%;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+#login fieldset{
+    padding: 0;
+    width: 95%;
+    min-width: 350px;
+    margin: 0;
+    border-radius: 0 0 20px 20px;
+    border: 1px solid;
+}
+
+#login fieldset form{
+    width: 100%;
+    padding: 5%;
+    min-width: 350px;
+    border-radius: 0 0 2.5% 2.5%;
+}
+
+#login fieldset form #recaptcha{
+    width: 100%;
+    padding: 3%;
+}

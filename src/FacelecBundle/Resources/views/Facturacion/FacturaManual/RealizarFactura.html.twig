@@ -1,0 +1,347 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    {% for cat in menu if cat.mnu_url == "FacturaManual" %}
+        {% if cat.rol_insert == 1 %}
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background: #3c8dbc">
+                    <h2 align="center" style="color: white;">Factura Manual</h2>
+                </div>
+                <div class="panel-body">
+                    <br>
+                    <form id="frmFactura" class="col-lg-10 col-lg-offset-1">
+                        <div class="btn-group btn-group-justified btn-group-raised">
+                            <a id="Limpiar" class="btn btn-raised btn-primary"><span class="glyphicon glyphicon-erase"></span><span class="hidden-xs"> Limpiar</span></a>
+                            <a href="{{ path ('Inicio') }}" class="btn btn-raised btn-primary"><span class="glyphicon glyphicon-home"></span><span class="hidden-xs"> Inicio</span></a>
+                        </div>
+                        <br>
+                        {% for fact in factura %}
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="recep">Receptor:</label>
+                                    <select class="selectpicker form-control" name="recep" id="recep" data-live-search="true">
+                                        <option value="0">-- Seleccione --</option>
+                                        {% for recep in receptores %}
+                                            {% if fact.id_receptor == recep.id_receptor %}
+                                                {% set selected = "selected" %}
+                                            {% else %}
+                                                {% set selected = "" %}
+                                            {% endif %}
+                                            <option value="{{ recep.id_receptor }}" {{ selected }}>{{ recep.nombreRazon }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                                    <label for="serie">Serie:</label>
+                                    <select class="selectpicker form-control" name="serie" id="serie" data-live-search="true">
+                                        <option value="0">-- Seleccione --</option>
+                                        {% for serie in series %}
+                                            {% if fact.serie == serie.serie %}
+                                                {% set selected = "selected" %}
+                                            {% else %}
+                                                {% set selected = "" %}
+                                            {% endif %}
+                                            <option value="{{ serie.serie }}" {{ selected }} data-ts="{{ serie.id_tiposerie }}">{{ serie.serie }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                                    <label for="fch">Fecha:</label>
+                                    <div class="input-group">
+                                        <input type="text" id="fch" name="fch" class="form-control" value="{{ fact.fecha }}" style="cursor: pointer;" readonly/>
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <input type="hidden" id="usocfdi_temp" name="usocfdi_temp" value="{{ fact.usoCFDI }}" readonly/>
+                                <div class="form-group col-xs-12 col-md-8 col-lg-6">
+                                    <label for="uso_cfdi">Uso CFDI:</label>
+                                    <select class="selectpicker form-control" name="uso_cfdi" id="uso_cfdi" data-live-search="true">
+                                        <option value="0">-- Seleccione --</option>
+                                    </select>
+                                </div>
+                            </div>
+                                
+                            <input type="hidden" id="uuid_r" name="uuid_r" value="{{ fact.uuid_r }}"/>
+                            {#% if fact.uuid_r != "" %#}
+                            <div class="row" id="cfdiR" style="display: none;">
+                                <div class="col-xs-12">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h3 align="center" class="panel-title">CFDI Relacionado</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group col-xs-12 col-sm-12 col-lg-3">
+                                                <label for="suc">Sucursal:</label>
+                                                <input type="text" id="suc" name="suc" class="form-control" disabled/>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-4 col-lg-3">
+                                                <label for="serieR">Serie:</label>
+                                                <select class="selectpicker form-control" name="serieR" id="serieR" data-live-search="true" >
+                                                    <option value="0">-Seleccione-</option>
+                                                    {% for serieR in seriesR %}
+                                                        {#% if fact.serie == serieR.serie %}
+                                                            {% set selected = "selected" %}
+                                                        {% else %}
+                                                            {% set selected = "" %}
+                                                        {% endif %#}
+                                                        <option value="{{ serieR.serie }}" {#{ selected }#}>{{ serieR.serie }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-4 col-lg-3">
+                                                <label for="folio">Folio:</label>
+                                                <input type="text" id="folio" name="folio" class="form-control" disabled/>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-4 col-lg-3">
+                                                <label for="monto">Monto:</label>
+                                                <input type="text" id="monto" name="monto" class="form-control" placeholder="00.00" disabled/>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-lg-6">
+                                                <label for="recepR">Receptor:</label>
+                                                <input type="text" id="recepR" name="recepR" class="form-control" disabled/>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-lg-6">
+                                                <label for="tiporel">Tipo Relación:</label>
+                                                <select class="selectpicker form-control" name="tiporel" id="tiporel" data-live-search="true">
+                                                    <option value="0">-- Seleccione --</option>
+                                                    {% for tipoRel in tiposRel %}
+                                                        {% if fact.tipoRelacion == tipoRel.tiporelacion %}
+                                                            {% set selected = "selected" %}
+                                                        {% else %}
+                                                            {% set selected = "" %}
+                                                        {% endif %}
+                                                        <option value="{{ tipoRel.tiporelacion }}" {{ selected }}>{{ tipoRel.descripcion }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {#% endif %#}
+
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-12 col-lg-4">
+                                    <label for="cond_pago">Condiciones de Pago:</label>
+                                    <input type="text" id="cond_pago" name="cond_pago" class="form-control" value="{{ fact.condicionesdepago }}"/>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-6 col-lg-4">
+                                    <label for="metodoPago">Método de Pago:</label>
+                                    <select class="selectpicker form-control" name="metodoPago" id="metodoPago" data-live-search="true">
+                                        <option value="0">-- Seleccione --</option>
+                                        {% for metodoPago in metodosPago %}
+                                            {% if fact.metododepago == metodoPago.metodopago %}
+                                                {% set selected = "selected" %}
+                                            {% else %}
+                                                {% set selected = "" %}
+                                            {% endif %}
+                                            <option value="{{ metodoPago.metodopago }}" {{ selected }}>{{ metodoPago.descripcion }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-6 col-lg-4">
+                                    <label for="formaPago">Forma de Pago:</label>
+                                    <select class="selectpicker form-control" name="formaPago" id="formaPago" data-live-search="true">
+                                        <option value="0">-- Seleccione --</option>
+                                        {% for formaPago in formasPago %}
+                                            {% if fact.formadepago == formaPago.formaPago %}
+                                                {% set selected = "selected" %}
+                                            {% else %}
+                                                {% set selected = "" %}
+                                            {% endif %}
+                                            <option value="{{ formaPago.formaPago }}" {{ selected }}>{{ formaPago.descripcion }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                                    
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-lg-4">
+                                    <label for="tipo_comp">Tipo de Comprobante:</label>
+                                    <select class="selectpicker form-control" name="tipo_comp" id="tipo_comp" data-live-search="true">
+                                        <option value="0">-- Seleccione --</option>
+                                        {% for tipoComp in tiposComp %}
+                                            {% if fact.tipodeComprobante == tipoComp.tipodecomprobante %}
+                                                {% set selected = "selected" %}
+                                            {% else %}
+                                                {% set selected = "" %}
+                                            {% endif %}
+                                            <option value="{{ tipoComp.tipodecomprobante }}" {{ selected }}>{{ tipoComp.descripcion }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6 col-lg-4">
+                                    <div class="row col-xs-12">
+                                        <label>Lugar expedición (CP)-Estado:</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <input type="text" id="lugexcp" name="lugexcp" class="form-control" onkeypress="return soloNumeros(event);" value="{{ fact.lugarExpedicion }}"/>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <input type="text" id="lugexedo" name="lugexedo" class="form-control" value="{{ fact.estado }}" disabled/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6 col-lg-4">
+                                    <label for="no_cta">Número de Cuenta:</label>
+                                    <input type="text" id="no_cta" name="no_cta" class="form-control" value="{{ fact.cuentadepago }}" maxlength="4" onkeypress="return soloNumeros(event);" disabled/>
+                                </div>
+                            </div>
+                                    
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-lg-3 text-center">
+                                    <label>CATÁLOGO:</label><br>
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="cat" id="catp" value="1"> Productos
+                                    </label>
+                                    <label class="form-check-label col-xs-offset-2">
+                                        <input class="form-check-input" type="radio" name="cat" id="catg" value="0"> General
+                                    </label>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-4 col-lg-2">
+                                    <label for="codprod">Código:</label>
+                                    <input type="text" id="codprod" name="codprod" class="form-control" disabled/>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-8 col-lg-5">
+                                    <label for="nomprod">Nombre:</label>
+                                    <input type="text" id="nomprod" name="nomprod" class="form-control" disabled/>
+                                </div>
+                                
+                                <div class="form-group col-xs-12 col-sm-12 col-lg-2">
+                                    <label></label><br>
+                                    <div class="btn-group btn-group-justified btn-group-raised">
+                                        <a id="AgrProd" class="btn btn-raised btn-primary"><span class="fa fa-plus-circle"></span></a>
+                                        <a id="RmvProd" class="btn btn-raised btn-primary"><span class="fa fa-minus-circle"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                                    
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-lg-10">
+                                    <label for="concep">Concepto:</label>
+                                    <input type="text" id="concep" name="concep" class="form-control" disabled/>
+                                </div>
+                                <div class="form-group col-xs-12 col-lg-2">
+                                    <label for="cta_pred">Cuenta predial:</label>
+                                    <input type="text" id="cta_pred" name="cta_pred" class="form-control"/>
+                                </div>
+                            </div>
+                                    
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-6 col-lg-4">
+                                    <label for="um">Unidad de Medida:</label>
+                                    <input type="text" id="um" name="um" class="form-control" disabled/>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6 col-lg-2">
+                                    <label for="cant">Cantidad:</label>
+                                    <input type="text" id="cant" name="cant" class="form-control"/>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-lg-2">
+                                    <label for="precio">Precio Unitario:</label>
+                                    <input type="text" id="precio" name="precio" class="form-control"/>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-lg-2">
+                                    <label for="dcto">% Descuento:</label>
+                                    <input type="text" id="dcto" name="dcto" class="form-control"/>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-4 col-lg-2">
+                                    <label for="iva">Impuesto:</label>
+                                    <input type="text" id="iva" name="iva" class="form-control" disabled/>
+                                </div>
+                            </div>
+                                
+                            <div class="row">
+                                <div class="col-xs-12" id="fctmnldet">
+                                </div>
+                            </div>
+                                
+                            <br>
+                                
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-6 col-lg-4">
+                                    <label for="moneda">Moneda:</label>
+                                    <select class="selectpicker form-control" name="moneda" id="moneda" data-live-search="true">
+                                        <option value="0">-- Seleccione --</option>
+                                        {% for moneda in monedas %}
+                                            {% if fact.moneda == moneda.moneda %}
+                                                {% set selected = "selected" %}
+                                            {% else %}
+                                                {% set selected = "" %}
+                                            {% endif %}
+                                            <option value="{{ moneda.moneda }}" {{ selected }}>{{ moneda.descripcion }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6 col-lg-2">
+                                    <label for="tip_camb">Tipo de cambio:</label>
+                                    <input type="text" id="tip_camb" name="tip_camb" class="form-control" value="{{ fact.tipoCambio }}"/>
+                                </div>
+                            </div>
+                                
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <label for="md">Motivo Descuento:</label>
+                                    <textarea id="md" name="md" class="form-control">{{ fact.motivodescuento }}</textarea>
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    <label for="obs">Observaciones:</label>
+                                    <textarea id="obs" name="obs" class="form-control">{{ fact.observaciones }}</textarea>
+                                </div>
+                            </div>
+                                
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <button type="button" id="btnGenerar" class="btn btn-block btn-raised btn-success"><span class="fa fa-check-circle"></span><span class="hidden-xs"> Generar Factura</span></button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </form>
+                </div>
+            </div>
+
+            <a id="btnModal" data-toggle="modal" data-target="#exampleModal" hidden></a>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Aviso</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ¿?
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btnSi" type="button" class="btn btn-secondary" data-dismiss="modal">Si</button>
+                            <button id="btnNo" type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {% include 'FacelecBundle:Default:Alerta1.html.twig' %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/app_js/Facturacion_RealizarFactura.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% block contenido %}
+    {% for cat in menu if cat.mnu_url == "Sucursal" %}
+        {% if cat.rol_update == 1 %}
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="background: #3c8dbc">
+                <h2 align="center" style="color: white;">Actualizar Sucursal</h2>
+            </div>
+            
+            <div class="panel-body">
+                <br>
+                <div id="r" class="r">
+                <form id="frmSucursal" class="col-lg-6 col-lg-offset-3">
+                    <div class="btn-group btn-group-justified btn-group-raised">
+                        <a href="{{ path('Sucursal') }}" class="btn btn-raised btn-primary"><span class="fa fa-arrow-circle-left"></span><span class="hidden-xs"> Regresar</span></a>
+                        <a id="Editar" class="btn btn-raised btn-primary"><span class="fa fa-pencil"></span><span class="hidden-xs"> Editar</span></a>
+                    </div>
+                    <br>
+                    {% for sucursal in sucursales %}
+                    <div class="form-group">
+                        <label for="rs">RAZÓN SOCIAL:</label>
+                        <select id="rs" name="rs" class="form-control selectpicker" data-live-search="true">
+                            <option value="">-- Seleccione --</option>
+                            {% for cliente in clientes %}
+                                {% if sucursal.id_cliente == cliente.id_cliente %}
+                                    <option value="{{ cliente.id_cliente }}" selected>{{ cliente.razonsocial }}</option>
+                                {% else %}
+                                    <option value="{{ cliente.id_cliente }}">{{ cliente.razonsocial }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sucursal">NO. SUCURSAL:</label>
+                        <input type="text" id="sucursal" name="sucursal" class="form-control" placeholder="Número de sucursal" onkeypress="return cambiarMinusculas(this);" onchange="Mayusculas(this);" value="{{ sucursal.sucursal }}"/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nombre">NOMBRE:</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" value="{{ sucursal.nombre }}"/>
+                    </div>
+                    
+                    {% set selected_f = '' %}
+                    {% set selected_l = '' %}
+                    
+                    {% if sucursal.tiposucursal == 'F' %}
+                        {% set selected_f = 'selected' %}
+                    {% else %}
+                        {% set selected_l = 'selected' %}
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="tipo">TIPO:</label>
+                        <select id="tipo" name="tipo" class="form-control selectpicker">
+                            <option value="">-- Seleccione --</option>
+                            <option value="F" {{ selected_f }}>Farmacia</option>
+                            <option value="L" {{ selected_l }}>Laboratorio</option>
+                        </select>
+                    </div>
+                        
+                    <label for="apertura">APERTURA:</label>
+                    <div class="form-group">
+                        <div class="input-group date" data-provide="datepicker">
+                            <input type="text" id="apertura" name="apertura" class="form-control" placeholder="aaaa-mm-dd" value="{{ sucursal.apertura }}"/>
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                        <input name="id_sucursal" type="text" value="{{ sucursal.id_sucursal }}" hidden/>
+                        
+                        {% for documento in documentos if documento.id_sucursal != ""%}
+                                <input id="documentos" type="text" value="{{ documento.id_sucursal }}" hidden/>
+                            {% else %}
+                                <input id="documentos" type="text" hidden/>
+                        {% endfor %}
+                    </div>
+                        
+                    <br>
+                    <div class="form-group" align="center">
+                        <button type="button" id="Guardar" class="btn btn-block btn-raised btn-primary"><span class="fa fa-floppy-o"></span><span class="hidden-xs"> Guardar</span></button>
+                    </div>
+                    {% endfor %}
+                </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('public/js/app_js/Catalogos_ModificarSucursal.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    {% for cat in menu if cat.mnu_url == "UsuariosMenu" %}
+        {% if cat.rol_insert == 1 %}
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background: #3c8dbc">
+                    <h2 align="center" style="color: white;">Agregar Usuario Menú</h2>
+                </div>
+                <div class="panel-body">
+                    <br>
+                    <form id="frmMenu">
+                        <div class="form-group col-lg-12">
+                            <div class="btn-group btn-group-justified btn-group-raised">
+                                <a href="{{ path('UsuariosMenu') }}" class="btn btn-raised btn-primary"><span class="fa fa-arrow-circle-left"></span><span class="hidden-xs"> Regresar</span></a>
+                                <a id="Limpiar" class="btn btn-raised btn-primary"><span class="glyphicon glyphicon-erase"></span><span class="hidden-xs"> Limpiar</span></a>
+                            </div>
+                        </div>
+                        <br>  
+                        <div class="form-group col-lg-12">
+                            <label for="usuario">USUARIO:</label>
+                            <select class="form-control" name="usuario" id="usuario">
+                                <option value="" selected="true" disabled="disabled">-- Seleccione --</option>
+                                {% for usuario in usuarios %}
+                                    <option value="{{ usuario.idUsr }}">{{ usuario.nomusr }}</option>
+                                {% endfor %}
+                            </select>
+                            <div id="error1" hidden>Complete este campo</div>
+                        </div>
+                        
+                        <div class="form-group col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" style="text-align: center;"><b>Menús disponibles</b></div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <select class="form-control" name="menus_disp" id="menus_disp" multiple size="10">
+                                            {% for menu in menus %}
+                                                <option value="{{ menu.mnu_id }}">{{ menu.mnu_nom }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button id="pasar" class="btn btn-block btn-primary col-lg-6" disabled>Asignar <span class="fa fa-arrow-right"></span></button>
+                                        <button id="pasartodos" class="btn btn-block btn-primary col-lg-6" disabled>Asignar todos <span class="fa fa-arrow-right"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                        
+                        <select id="menus_disp_r" multiple size="10" hidden>
+                            {% for menu in menus %}
+                                <option value="{{ menu.mnu_id }}">{{ menu.mnu_nom }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        <div class="form-group col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" style="text-align: center;"><b>Menús por asignar</b></div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <select class="form-control" name="menus_asignar" id="menus_asignar" multiple size="10"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button id="quitar" class="btn btn-block btn-primary col-lg-6" disabled><span class="fa fa-arrow-left"></span> Quitar</button>
+                                        <button id="quitartodos" class="btn btn-block btn-primary col-lg-6" disabled><span class="fa fa-arrow-left"></span> Quitar todos</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group col-lg-12">
+                            <a id="Guardar" class="btn btn-block btn-raised btn-primary"><span class="fa fa-floppy-o"></span><span class="hidden-xs"> Guardar</span></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            {% include 'FacelecBundle:Default:Alerta.html.twig' %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/app_js/CatalogosSistema_AgregarUsuarioMenu.js') }}"></script>
+{% endblock %}

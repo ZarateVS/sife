@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="background: #3c8dbc">
+            <h2 align="center" style="color: white;">Emisor</h2>
+        </div>
+
+        <div class="panel-body">
+            <div class="btn-group btn-group-justified btn-group-raised">
+                <a href="{{ path('Inicio') }}" class="btn btn-raised btn-primary"><span class="glyphicon glyphicon-home"></span><span class="hidden-xs"> Inicio</span></a>
+            </div>
+            <br>
+            <div class="table-responsive" id="catalogo"> </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/app_js/Catalogos_Emisor.js') }}"></script>
+{% endblock %}

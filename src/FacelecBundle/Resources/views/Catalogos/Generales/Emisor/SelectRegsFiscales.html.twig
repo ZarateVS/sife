@@ -1,0 +1,7 @@
+<label for="reg_fiscal">*Regimen fiscal:</label>
+<select class="form-control" name="reg_fiscal" id="reg_fiscal">
+    <option value="">-- Seleccione --</option>
+    {% for reg in regs %}
+        <option value="{{ reg.regimenFiscal }}">{{ reg.descripcion }}</option>
+    {% endfor %}
+</select>

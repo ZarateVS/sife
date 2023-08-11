@@ -1,0 +1,85 @@
+{% for rol in menu if rol.mnu_url == 'UsuariosSucursal' %}
+    <div class="table-responsive">       
+        <table class="table table-bordered display" cellspacing="0" id="table" width="100%">
+            <thead>
+                <tr>
+                    <th hidden></th>
+                    <th hidden></th>
+                    <th hidden></th>
+                    <th hidden></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set i=0 %}
+                        
+                {% for info_usr in info_usrs %}
+                    {% set checked = "unchecked" %}
+                    
+                    {% if loop.first %}
+                        {% set id=info_usr.idUsr %}
+                    {% endif %}
+                    
+                    {% if id != info_usr.idUsr %}
+                        {% set i=0 %}
+                    {% endif %}
+                    
+                    {% set id=info_usr.idUsr %}
+                    
+                    {% if i == 0 %}
+                        <tr>
+                        <td><b>Usuario: </b>
+                            {% if rol.rol_update == 1 %}
+                                <a id="Modificar" data-idusr="{{ info_usr.idUsr }}" style="cursor: pointer;">{{ info_usr.nomusr }}</a>
+                            {% else %}
+                                {{ info_usr.nomusr }}
+                            {% endif %}
+                        {% if rol.rol_delete == 1 %}
+                            <a style="float:right;" id="Eliminar" data-idusr="{{ info_usr.idUsr }}" class="btn btn-raised btn-danger"><span class="fa fa-trash-o"></span><span class="hidden-xs"> Eliminar</span></a></td>
+                        {% else %}
+                            </td>
+                        {% endif %}
+                            <td><b>Sucursal</b></td>
+                            <td><input type="checkbox" id="todos_consulta" data-idusr="{{ id }}" /><b> Consultar</b></td>
+                            <td><input type="checkbox" id="todos_captura" data-idusr="{{ id }}" /><b> Subir Archivos</b></td>
+                        </tr>
+                        {% set i=1 %}
+                    {% endif %}
+                    
+                    <tr>
+                        <td><b>Usuario: </b>
+                            {% if rol.rol_update == 1 %}
+                                <a id="Modificar" data-idusr="{{ info_usr.idUsr }}" style="cursor: pointer;">{{ info_usr.nomusr}}</a>
+                            {% else %}
+                                {{ info_usr.nomusr }}
+                            {% endif %}
+                        {% if rol.rol_delete == 1 %}
+                            <a style="float:right;" id="Eliminar" data-idusr="{{ info_usr.idUsr }}" class="btn btn-raised btn-danger"><span class="fa fa-trash-o"></span><span class="hidden-xs"> Eliminar</span></a></td>
+                        {% else %}
+                            </td>
+                        {% endif %}
+                        <td>{{ info_usr.sucursal }} - {{ info_usr.nombre }}</td>
+                        <td>
+                            {% if info_usr.consulta == 1 %}
+                                {% set checked = "checked" %}
+                            {% endif %}
+                            <input type="checkbox" id="activar_desactivar_consulta" data-idusr="{{ info_usr.idUsr }}" data-idsuc="{{ info_usr.id_sucursal }}" data-campo="consulta" data-accion="Consultar" {{ checked }}>
+                        </td>
+                        
+                        {% set checked = "unchecked" %}
+                    
+                        <td>
+                            {% if info_usr.captura == 1 %}
+                                {% set checked = "checked" %}
+                            {% endif %}
+                            <input type="checkbox" id="activar_desactivar_captura" data-idusr="{{ info_usr.idUsr }}" data-idsuc="{{ info_usr.id_sucursal }}" data-campo="captura" data-accion="Subir Archivos" {{ checked }}>
+                        </td>                   
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endfor %}
+                        
+{% block javascript %}
+    <script src="{{ asset('public/js/app_js/CatalogosSistema_TablaUsuariosSucursales.js') }}"></script>
+{% endblock %}

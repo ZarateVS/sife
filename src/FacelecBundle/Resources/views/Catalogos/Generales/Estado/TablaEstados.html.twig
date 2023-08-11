@@ -1,0 +1,40 @@
+{% for rol in menu if rol.mnu_url == 'Estado' %}
+        <table class="table table-bordered display nowrap" cellspacing="0" id="table">
+            <caption style="background: #3c8dbc; color: white; text-align: center;"><span class="fa fa-list-ul"></span><span class="hidden-xs"> LISTADO DE ESTADOS</span></caption> 
+            <thead>
+                <tr>
+                    <th>Estado</th>
+                    {% if rol.rol_delete == 1 %}
+                        <th>Activo</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for estado in estados %}
+                    {% set clase = "danger" %}
+                    {% set checked = "unchecked" %}
+                    {% if estado.activo == 1 %}
+                        {% set clase = "success" %}
+                        {% set checked = "checked" %}
+                    {% endif %}
+                    <tr class="{{ clase }}">
+                        <td>
+                            {% if estado.activo == 1 and rol.rol_update == 1 %}
+                                <a id="Modificar" data-id="{{ estado.id_estado }}" style="cursor: pointer;">{{ estado.estado }}</a>
+                            {% else %}
+                                {{ estado.estado }}
+                            {% endif %}
+                        </td>
+                        {% if rol.rol_delete == 1 %}
+                            <td><input type="checkbox" id="activar_desactivar" data-id="{{ estado.id_estado }}" data-nombre="{{ estado.estado }}" {{ checked }} /></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+{% endfor %}
+                        
+{% block javascript %}
+    <script src="{{ asset('public/js/app_js/Catalogos_TablaEstados.js') }}"></script>
+{% endblock %}

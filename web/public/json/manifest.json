@@ -1,0 +1,23 @@
+{
+  "short_name": "SIRH",
+  "name": "Sistema Integral de Recursos Humanos",
+  "start_url": "Login",
+  "icons": [{
+    "src": "../images/icons/user128.png",
+    "type": "image/png",
+    "sizes": "128x128"
+  }, {
+    "src": "../images/icons/user152.png",
+    "type": "image/png",
+    "sizes": "152x152"
+  }, {
+    "src": "../images/icons/user144.png",
+    "type": "image/png",
+    "sizes": "144x144"
+  }, {
+    "src": "../images/icons/user192.png",
+    "type": "image/png",
+    "sizes": "192x192"
+  }],
+  "display": "standalone"
+}

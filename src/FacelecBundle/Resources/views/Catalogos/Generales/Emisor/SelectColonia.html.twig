@@ -1,0 +1,9 @@
+<label for="colonia">*Colonia:</label>
+<select class="form-control" name="colonia" id="colonia">
+    <option value="">-- Seleccione --</option>
+    {% for colonia in colonias %}
+        {% if colonia.id_colonia != 0 %}
+            <option value="{{ colonia.id_colonia }}">{{ colonia.colonia }}</option>
+        {% endif %}
+    {% endfor %}
+</select>

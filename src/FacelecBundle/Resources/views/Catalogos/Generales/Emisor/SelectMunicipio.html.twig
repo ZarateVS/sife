@@ -1,0 +1,7 @@
+<label for="municipio">*Delegacion/municipio:</label>
+<select class="form-control" name="municipio" id="municipio">
+    <option value="">-- Seleccione --</option>
+    {% for municipio in municipios %}
+        <option value="{{ municipio.id_municipio }}">{{ municipio.municipio }}</option>
+    {% endfor %}
+</select>

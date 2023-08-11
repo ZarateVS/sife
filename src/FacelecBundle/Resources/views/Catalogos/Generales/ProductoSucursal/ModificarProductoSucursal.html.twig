@@ -1,0 +1,102 @@
+{% block contenido %}
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="background: #3c8dbc">
+            <h2 align="center" style="color: white;">Actualizar Producto Sucursal</h2>
+        </div>
+        <div class="panel-body">
+            <form id="frmProducto" class="col-lg-6 col-lg-offset-3">
+                <br>
+                <div class="form-group">
+                    <div class="btn-group btn-group-justified btn-group-raise">
+                        <a href="{{ path('ProductosSucursales') }}" id="Regresar" class="btn btn-raised btn-primary"><span class="fa fa-arrow-circle-left"></span><span class="hidden-xs"> Regresar</span></a>
+                        {% for rol in menu if rol.mnu_url == 'ProductosSucursales' %}
+                            {% if rol.rol_update == 1 %}
+                                <a id="Editar" class="btn btn-raised btn-primary"><span class="fa fa-pencil"></span><span class="hidden-xs"> Editar</span></a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% for infoprod in InfoProducto %}
+                    <div class="form-group">
+                        <label for="cve_prodserv">PRODUCTOS/SERVICIOS:</label>
+                        <select class="form-control selectpicker" name="cve_prodserv" id="cve_prodserv" data-live-search="true">
+                            <option value="">-- Seleccione --</option>
+                            {% for cve_prodserv in cves_prodserv %}
+                                {% if cve_prodserv.claveProdServ == infoprod.claveProdServ %}
+                                    <option value="{{ cve_prodserv.claveProdServ }}" selected>{{ cve_prodserv.descripcion }}</option>
+                                {% else %}
+                                    <option value="{{ cve_prodserv.claveProdServ }}">{{ cve_prodserv.descripcion }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="codigo">CÓDIGO:</label>
+                        <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Codigo" maxlength="50" onkeypress="return SoloNumeros(event, 0)" value="{{ infoprod.Id_Producto }}"/>
+                        <input type="hidden" id="codigo_actual" name="codigo_actual" class="" value="{{ infoprod.Id_Producto }}"/>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="nombre">NOMBRE:</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" maxlength="180" value="{{ infoprod.Nombre }}"/>
+                        <input type="hidden" id="nombre_actual" name="nombre_actual" class=""  value="{{ infoprod.Nombre }}"/>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="precio">PRECIO:</label>
+                        <input type="text" id="precio" name="precio" class="form-control" placeholder="Precio" maxlength="15" onkeypress="return SoloNumeros(event, 1)" value="{{ infoprod.Precio }}"/>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="iva" >IVA:</label>
+                        <input type="text" id="iva" name="iva" class="form-control" placeholder="IVA" maxlength="11" onkeypress="return SoloNumeros(event, 0)" value="{{ infoprod.IVA }}"/>
+                    </div>
+                        
+                    <div class="form-group">
+                        <label for="cve_unidad">UNIDADES DE MEDIDA CFDI:</label>
+                        <select class="form-control selectpicker" name="cve_unidad" id="cve_unidad" data-live-search="true">
+                            <option value="">-- Seleccione --</option>
+                            {% for cve_unidad in cves_unidad %}
+                                {% if cve_unidad.claveUnidad == infoprod.claveUnidad %}
+                                    <option value="{{ cve_unidad.claveUnidad }}" selected>{{ cve_unidad.nombre }}</option>
+                                {% else %}
+                                    <option value="{{ cve_unidad.claveUnidad }}">{{ cve_unidad.nombre }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+            
+                    {% set unidad = infoprod.unidad %}
+                    {% set unidades = ['Metro', 'Kilo', 'Hora', 'Dia', 'Litro', 'Botella', 'Piezas', 'Caja', 's/u', 'No aplica'] %}
+                
+                    <div class="form-group">
+                        <label for="option">UNIDAD:</label>
+                        <select class="form-control selectpicker" name="unidad" id="unidad">
+                            <option value="">-- Seleccione --</option>
+                            {% for i in 0..9 %}
+                                {% if unidad == unidades[i] %}
+                                    <option value="{{ unidades[i] }}" selected>{{ unidades[i] }}</option>
+                                {% else %}
+                                    <option value="{{ unidades[i] }}">{{ unidades[i] }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+                    {% for rol in menu if rol.rol_update == 1%}
+                        {% if infoprod.activo == 1 %}
+                            <div class="form-group" align="center">
+                                <button type="button" id="Guardar" class="btn btn-block btn-raised btn-primary" style="display: none"><span class="fa fa-floppy-o"></span><span class="hidden-xs"> Guardar</span></button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('public/js/app_js/Catalogos_ModificarProductoSucursal.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% block contenido %}
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="background: #3c8dbc">
+            {% for opc in menu if opc.mnu_url == "Colonia" %}
+                {% if opc.rol_update==1 %}
+                    <h2 align="center" style="color:white;">Actualizar Colonia</h2>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="panel-body">
+            <form id="frmColonia" class="col-lg-6 col-lg-offset-3">
+                <div class="form-group">
+                    <div class="btn-group btn-group-justified btn-group-raised">
+                        <a id="Regresar" class="btn btn-raised btn btn-primary"><span class="fa fa-arrow-circle-left"></span><span class="hidden-xs"> Regresar</span></a>
+                        {% for opc in menu if opc.mnu_url == "Colonia" %}
+                            {% for col in colonia if col.activo == 1 %}
+                                <a id="editarColonia" onclick="Habilitarcampos();" class="btn btn-raised btn-primary"><span class="fa fa-pencil"></span><span class="hidden-xs">Editar</span></a>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% for col in colonia %}
+                    <input id="idestadotemp" name="idestadotemp"  type="hidden" value="{{col.id_estado}}">
+                    <input id="idmunicipiotemp" name="idmunicipiotemp"  type="hidden" value="{{col.id_municipio}}">
+                    <input id="idcoloniatemp" name="idcoloniatemp"  type="hidden" value="{{col.id_colonia}}">
+                    <input id="coloniatemp" name="coloniatemp"  type="hidden" value="{{col.colonia}}">
+                    <input id="cptemp" name="cptemp"  type="hidden" value="{{col.codigoPostal}}">
+                    <input id="cdtemp" name="cdtemp"  type="hidden" value="{{col.ciudad}}">
+                    <div class="has has-info">
+                        <div class="form-group">
+                            <label for="estado">*ESTADO:</label>
+                            <select class="selectpicker form-control" id="estado" name="estado" data-live-search="true" disabled>   
+                                {% for est in estados %}
+                                    {% if col.id_estado == est.id_estado %}
+                                        <option value="{{ est.id_estado }}" selected>{{ est.estado }}</option>
+                                    {% else %}
+                                        <option value="{{ est.id_estado }}" >{{ est.estado }}</option>
+                                    {% endif %}    
+                                {% endfor %} 
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="municipio">*MUNICIPIO:</label>
+                            <select class="selectpicker form-control" id="municipio" name="municipio" data-live-search="true" disabled>
+                                {% for municipio in municipios %}
+                                    {% if col.id_municipio == municipio.id_municipio %}
+                                        <option value="{{ municipio.id_municipio }}" selected>{{ municipio.municipio }}</option>
+                                    {% else %}
+                                        <option value="{{ municipio.id_municipio }}">{{ municipio.municipio }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">*NOMBRE:</label>  
+                            <input id="nombre" name="nombre" class="form-control" placeholder="Nombre" value="{{ col.colonia }}" required readonly/>
+                        </div>
+                        <div class="form-group">
+                            <label for="cp">*CÓDIGO POSTAL:</label>
+                            <input id="cp" name="cp" class="form-control" placeholder="Código postal" value="{{ col.codigoPostal }}" onkeypress="return justNumbers(event);" required readonly/> 
+                        </div>
+                        <div class="form-group">
+                            <label for="cd">CIUDAD:</label>  
+                            <input id="cd" name="cd" class="form-control" placeholder="Ciudad" value="{{ col.ciudad }}" readonly/>
+                        </div>
+                        <div class="form-group">
+                            {% for opc in menu if opc.mnu_url == "Colonia" %}
+                                {% if opc.rol_update == 1 %}
+                                    <div class="form-group">
+                                        <a id="Guardar" class="btn btn-block btn-raised btn-primary hidden"><span class="glyphicon glyphicon-floppy-disk"></span><span class="hidden-xs">Guardar</span></a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('public/js/app_js/Catalogos_ModificarColonia.js') }}"></script>
+{% endblock %}

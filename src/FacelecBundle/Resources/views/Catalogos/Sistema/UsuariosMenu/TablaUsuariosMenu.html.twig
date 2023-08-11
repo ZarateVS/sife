@@ -1,0 +1,86 @@
+{% for rol in menu if rol.mnu_url == 'UsuariosMenu' %}
+    <div class="table-responsive">       
+        <table class="table table-bordered display" cellspacing="0" id="table" width="100%">
+            <thead>
+                <tr>
+                    <th hidden></th>
+                    <th hidden></th>
+                    <th hidden></th>
+                    <th hidden></th>
+                    <th hidden></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for info_usr in info_usrs %}
+                    {% set checked = "unchecked" %}
+                    <tr>
+                        <td><b>Usuario: </b><a id="Modificar" data-idusr="{{ info_usr.idUsr }}" style="cursor: pointer;">{{ info_usr.nomusr}}</a>
+                        {% if rol.rol_delete == 1 %}
+                            <a style="float:right;" id="Eliminar" data-idusr="{{ info_usr.idUsr }}" class="btn btn-raised btn-danger" align="right" data-toggle="modal" data-target="#exampleModal"><span class="fa fa-trash-o"></span><span class="hidden-xs"> Eliminar</span></a></td>
+                            <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>-->
+                        {% else %}
+                            </td>
+                        {% endif %}
+                        <td>{{ info_usr.mnu_nom }}</td>
+                        <td>
+                            {% if info_usr.r_insert == 1 %}
+                                {% if info_usr.rol_insert == 1 %}
+                                    {% set checked = "checked" %}
+                                {% endif %}
+                                <input type="checkbox" data-idusr="{{ info_usr.idUsr }}" data-idmnu="{{ info_usr.mnu_id }}" data-nom_mnu="{{ info_usr.mnu_nom }}" id="activar_desactivar" data-campo="rol_insert" data-rol="insertar" {{ checked }}>
+                            {% endif %}
+                        </td>
+                        
+                        {% set checked = "unchecked" %}
+                    
+                        <td>
+                            {% if info_usr.r_update == 1 %}
+                                {% if info_usr.rol_update == 1 %}
+                                    {% set checked = "checked" %}
+                                {% endif %}
+                                <input type="checkbox" data-idusr="{{ info_usr.idUsr }}" data-idmnu="{{ info_usr.mnu_id }}" data-nom_mnu="{{ info_usr.mnu_nom }}" id="activar_desactivar" data-campo="rol_update" data-rol="actualizar" {{ checked }}>
+                            {% endif %}
+                        </td>
+                    
+                        {% set checked = "unchecked" %}
+                    
+                        <td>
+                            {% if info_usr.r_delete == 1 %}
+                                {% if info_usr.rol_delete == 1 %}
+                                    {% set checked = "checked" %}
+                                {% endif %}
+                                <input type="checkbox" data-idusr="{{ info_usr.idUsr }}" data-idmnu="{{ info_usr.mnu_id }}" data-nom_mnu="{{ info_usr.mnu_nom }}" id="activar_desactivar" data-campo="rol_delete" data-rol="eliminar" {{ checked }}>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endfor %}
+
+<input type="hidden" id="id_usuario"/>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¿Eliminar usuario de la lista?
+      </div>
+      <div class="modal-footer">
+        <button id="btnSi" type="button" class="btn btn-secondary" data-dismiss="modal">Si</button>
+        <button id="btnNo" type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+                        
+{% block javascript %}
+    <script src="{{ asset('public/js/app_js/CatalogosSistema_TablaUsuariosMenu.js') }}"></script>
+{% endblock %}

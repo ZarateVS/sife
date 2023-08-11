@@ -1,0 +1,42 @@
+{% block contenido %}
+    {% for cat in menu if cat.mnu_url == "Estado" %}
+        {% if cat.rol_update == 1 %}
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background: #3c8dbc">
+                    <h2 align="center" style="color: white;">Actualizar Estado</h2>
+                </div>
+
+                <div class="panel-body">
+                    <br>
+                    <div id="r" class="r">
+                    <form id="frmEstado" class="col-lg-6 col-lg-offset-3">
+                        <div class="btn-group btn-group-justified btn-group-raised">
+                            <a href="{{ path('Estado') }}" class="btn btn-raised btn-primary"><span class="fa fa-arrow-circle-left"></span><span class="hidden-xs"> Regresar</span></a>
+                            <a id="Editar" class="btn btn-raised btn-primary"><span class="fa fa-pencil"></span><span class="hidden-xs"> Editar</span></a>
+                        </div>
+                        <br>
+                        {% for estado in estados %}
+                            <div class="form-group">
+                                <label for="nombre">NOMBRE:</label>
+                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Estado" value="{{ estado.estado }}" maxlength="50"/>
+                                <input type="hidden" id="nom" name="nom" value="{{ estado.estado }}"/>
+                            </div>
+
+                            <input type="hidden" id="id_estado" name="id_estado" value="{{ estado.id_estado }}"/>
+
+                            <br>
+                            <div class="form-group" align="center">
+                                <button type="button" id="Guardar" class="btn btn-block btn-raised btn-primary"><span class="fa fa-floppy-o"></span><span class="hidden-xs"> Guardar</span></button>
+                            </div>
+                        {% endfor %}
+                    </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('public/js/app_js/Catalogos_ModificarEstado.js') }}"></script>
+{% endblock %}

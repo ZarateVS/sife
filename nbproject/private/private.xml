@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/inetpub/wwwroot/sife/web/public/js/app_js/Facturacion_ReporteFactura.js</file>
+            <file>file:/C:/inetpub/wwwroot/sife/src/FacelecBundle/Resources/views/Facturacion/FacturaManual/ReporteFactura.html.twig</file>
+            <file>file:/C:/inetpub/wwwroot/sife/web/public/js/app_js/Facturacion_RealizarFactura.js</file>
+            <file>file:/C:/inetpub/wwwroot/sife/src/FacelecBundle/Controller/FacturaController.php</file>
+            <file>file:/C:/inetpub/wwwroot/sife/src/FacelecBundle/Resources/views/Facturacion/FacturaManual/RealizarFactura.html.twig</file>
+            <file>file:/C:/inetpub/wwwroot/sife/src/FacelecBundle/Resources/views/Facturacion/FacturaManual/TablaProductosFactura.html.twig</file>
+            <file>file:/C:/inetpub/wwwroot/sife/web/public/js/app_js/Facturacion_TablaProductosFactura.js</file>
+        </group>
+    </open-files>
+</project-private>

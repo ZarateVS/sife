@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="background: #3c8dbc">
+            <h2 align="center" style="color: white;">Productos Sucursales</h2>
+        </div>
+
+        <div class="panel-body">
+            <div class="btn-group btn-group-justified btn-group-raised">
+                {% for rol in menu if rol.mnu_url == 'ProductosSucursales' %}
+                    {% if rol.rol_insert == 1 %}
+                        <a href="{{ path('AgregarProducto') }}" id="Agregar" class="btn btn-raised btn-primary"><span class="fa fa-plus-circle"></span><span class="hidden-xs"> Agregar</span></a>
+                    {% endif %}
+                {% endfor %}
+                <a href="{{ path('Inicio') }}" class="btn btn-raised btn-primary"><span class="glyphicon glyphicon-home"></span><span class="hidden-xs"> Inicio</span></a>
+            </div>
+            <br>
+            <div class="table-responsive" id="catalogo"> </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/app_js/Catalogos_ProductosSucursales.js') }}"></script>
+{% endblock %}

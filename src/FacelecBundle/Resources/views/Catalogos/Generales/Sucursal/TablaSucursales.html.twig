@@ -1,0 +1,45 @@
+{% for rol in menu if rol.mnu_url == 'Sucursal' %}
+    
+        <table class="table table-bordered display nowrap" cellspacing="0" id="table">
+            <caption style="background: #3c8dbc; color: white; text-align: center;"><span class="fa fa-list-ul"></span><span class="hidden-xs"> LISTADO DE SUCURSALES</span></caption> 
+            <thead>
+                <tr>
+                    <th>Sucursal</th>
+                    <th>Nombre</th>
+                    <th>Apertura</th>
+                    {% if rol.rol_delete == 1 %}
+                        <th>Activo</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for sucursal in sucursales %}
+                    {% set clase = "danger" %}
+                    {% set checked = "unchecked" %}
+                    {% if sucursal.activa == 1 %}
+                        {% set clase = "success" %}
+                        {% set checked = "checked" %}
+                    {% endif %}
+                    <tr class="{{ clase }}">
+                        <td>{{ sucursal.sucursal }}</td>
+                        <td>
+                            {% if sucursal.activa == 1 and rol.rol_update == 1 %}
+                                <a id="Modificar" data-id="{{ sucursal.id_sucursal }}" style="cursor: pointer;">{{ sucursal.nombre }}</a>
+                            {% else %}
+                                {{ sucursal.nombre }}
+                            {% endif %}
+                        </td>
+                        <td>{{ sucursal.apertura }}</td>
+                        {% if rol.rol_delete == 1 %}
+                            <td><input type="checkbox" id="activar_desactivar" data-id="{{ sucursal.id_sucursal }}" data-sucursal="{{ sucursal.sucursal }}-{{ sucursal.nombre }}" data-clave="{{ sucursal.sucursal }}" {{ checked }} /></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+{% endfor %}
+                        
+{% block javascript %}
+    <script src="{{ asset('public/js/app_js/Catalogos_TablaSucursales.js') }}"></script>
+{% endblock %}

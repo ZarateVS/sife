@@ -1,0 +1,47 @@
+{% for rol in menu if rol.mnu_url == 'Emisor' %}
+    <div class="table-responsive">
+        <table class="table table-bordered" cellspacing="0" id="table">
+            <caption style="background: #3c8dbc; color: white; text-align: center;"><span class="fa fa-list-ul"></span><span class="hidden-xs"> LISTADO DE CLIENTES</span></caption> 
+            <thead>
+                <tr>
+                    <th>RFC</th>
+                    <th>Nombre o Razón Social</th>
+                    <th>Estado</th>
+                    <th>Colonia</th>
+                    {% if rol.rol_delete == 1 %}
+                        <th>Activo</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                    {% set clase = "danger" %}
+                    {% set checked = "unchecked" %}
+                    {% if cliente.activo == 1 %}
+                        {% set clase = "success" %}
+                        {% set checked = "checked" %}
+                    {% endif %}
+                    <tr class="{{ clase }}">
+                        <td>{{ cliente.rfc }}</td>
+                        <td>
+                            {% if cliente.activo == 1 and rol.rol_update == 1 %}
+                                <a id="Modificar" data-id="{{ cliente.id_cliente }}" data-cp="{{ cliente.cp }}" data-tp="{{ cliente.tipoPer }}" style="cursor: pointer;">{{ cliente.razonsocial }}</a>
+                            {% else %}
+                                {{ cliente.razonsocial }}
+                            {% endif %}
+                        </td>
+                        <td>{{ cliente.estado }}</td>
+                        <td>{{ cliente.colonia }}</td>
+                        {% if rol.rol_delete == 1 %}
+                            <td><input type="checkbox" id="activar_desactivar" data-id="{{ cliente.id_cliente }}" data-rs="{{ cliente.razonsocial }}" {{ checked }} /></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endfor %}
+                        
+{% block javascript %}
+    <script src="{{ asset('public/js/app_js/Catalogos_TablaClientes.js') }}"></script>
+{% endblock %}

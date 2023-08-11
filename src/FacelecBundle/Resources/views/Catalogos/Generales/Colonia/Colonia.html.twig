@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="background: #3c8dbc">
+            <h2 align="center" style="color: white;">Colonia</h2>
+        </div>
+
+        <div class="panel-body">
+            <div class="btn-group btn-group-justified btn-group-raised">
+                {% for rol in menu if rol.mnu_url == 'Colonia' %}
+                    {% if rol.rol_insert == 1 %}
+                        <a href="{{ path('AgregarColonia') }}" id="Agregar" class="btn btn-raised btn-primary"><span class="fa fa-plus-circle"></span><span class="hidden-xs"> Agregar</span></a>
+                    {% endif %}
+                {% endfor %}
+                <a href="{{ path('Inicio') }}" class="btn btn-raised btn-primary"><span class="glyphicon glyphicon-home"></span><span class="hidden-xs"> Inicio</span></a>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Estado: </label>
+                    <select class="selectpicker form-control" name="estado" id="estado" data-live-search="true" data-edo="{{ id_edo }}">
+                        <option value="">-- Seleccione estado --</option>
+                        {% for estado in estados %}
+                            {% if id_edo == estado.id_estado %}
+                                <option value="{{ estado.id_estado }}" selected>{{ estado.estado }}</option>
+                            {% else %}
+                                <option value="{{ estado.id_estado }}">{{  estado.estado }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Municipio: </label>
+                    <select class="selectpicker form-control" name="municipio" id="municipio" data-live-search="true" data-mpio="{{ id_mpio }}">
+                        <option value="">-- Seleccione municipio --</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <div class="hidden-xs hidden-sm" style="margin-top: 25px;"></div>
+                    <button data-toggle="tooltip" title="Exportar Colonias" id="Exportar" class="btn btn-raised btn-success float-right"><span class="fa fa-arrow-circle-down"></span><span class="hidden-xs"> Exportar</span></button>
+                </div>
+            </div>
+            <br>
+            <div class="table-responsive" id="catalogo"> </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/app_js/Catalogos_Colonia.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,143 @@
+{% block contenido %}
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="background: #3c8dbc">
+            <h2 align="center" style="color: white;">Actualizar Emisor</h2>
+        </div>
+            
+        <div class="panel-body">
+            <form id="frmEmisor" class="col-lg-10 col-lg-offset-1">
+                <div class="btn-group btn-group-justified btn-group-raised">
+                    <a href="{{ path('Emisor') }}" class="btn btn-raised btn-primary"><span class="fa fa-arrow-circle-left"></span><span class="hidden-xs"> Regresar</span></a>
+                    <a id="Editar" class="btn btn-raised btn-primary"><span class="fa fa-pencil"></span><span class="hidden-xs"> Editar</span></a>
+                </div>
+                    <br>
+                {% for cliente in clientes %}
+                    <div class="row">
+                        <input type="hidden" id="id_cliente" name="id_cliente"  value="{{ cliente.id_cliente }}"/>
+                            <div class="form-group col-xs-12 col-lg-6" id="regs_fiscales">
+                                <label for="reg_fiscal">*RÉGIMEN FISCAL:</label>
+                                <select class="selectpicker form-control" name="reg_fiscal" id="reg_fiscal">
+                                    <option value="">-- Seleccione --</option>
+                                    {% for reg in regs %}
+                                        {% if cliente.regimenFiscal == reg.regimenFiscal %}
+                                            <option value="{{ reg.regimenFiscal }}" selected>{{ reg.descripcion }}</option>
+                                        {% else %}
+                                            <option value="{{ reg.regimenFiscal }}">{{ reg.descripcion }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% set checked_f = "unchecked" %}
+                            {% set checked_m = "unchecked" %}
+                            {% if cliente.tipoPer == 0 %}
+                                {% set checked_m = "checked" %}
+                            {% else %}
+                                {% set checked_f = "checked" %}
+                            {% endif %}
+                                
+                            <div class="form-group col-xs-12 col-lg-3">
+                                <label>*TIPO PERSONA:</label><br>
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="tipo_p" id="tipo_p" value="1" {{ checked_f }}> FÍSICA
+                                </label>
+                                <label class="form-check-label col-xs-offset-2">
+                                    <input class="form-check-input" type="radio" name="tipo_p" id="tipo_p" value="0" {{ checked_m }}> MORAL
+                                </label>
+                            </div>
+                                    
+                            <div class="form-group col-xs-12 col-lg-3">
+                                <label for="rfc">*RFC:</label>
+                                <input type="text" id="rfc" name="rfc" class="form-control" placeholder="RFC" maxlength="13" value="{{ cliente.rfc }}"/>
+                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-lg-6">
+                            <label for="rs">*NOMBRE/RAZÓN SOCIAL:</label>
+                            <input type="text" id="rs" name="rs" class="form-control" placeholder="Nombre o Razon Social" maxlength="120" value="{{ cliente.razonsocial }}"/>
+                        </div>
+                        <div class="form-group col-xs-12 col-lg-3">
+                            <label for="correo">*CORREO ELÉCTRONICO EMPRESA:</label>
+                            <input type="text" id="correo" name="correo" class="form-control" placeholder="correo@dominio.com" maxlength="100" value="{{ cliente.correoE }}"/>
+                        </div>
+                        <div class="form-group col-xs-12 col-lg-3">
+                            <label for="tel">TELÉFONO:</label>
+                            <input type="text" id="tel" name="tel" class="form-control" placeholder="Telefono" maxlength="15" onkeypress="return soloNumeros(event);" value="{{ cliente.telefono1 }}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-lg-6">
+                            <label for="calle">*CALLE:</label>
+                            <input type="text" id="calle" name="calle" class="form-control" placeholder="Calle" maxlength="100" value="{{ cliente.calle }}"/>
+                        </div>
+                        <div class="form-group col-xs-12 col-lg-3">
+                            <label for="num_ext">*NÚMERO EXTERIOR:</label>
+                            <input type="text" id="num_ext" name="num_ext" class="form-control" placeholder="Numero exterior" maxlength="10" value="{{ cliente.numExt }}"/>
+                        </div>
+                        <div class="form-group col-xs-12 col-lg-3">
+                            <label for="num_int">NÚMERO INTERIOR:</label>
+                            <input type="text" id="num_int" name="num_int" class="form-control" placeholder="Numero interior" maxlength="10" value="{{ cliente.numInt }}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-lg-3">
+                            <label for="cp">*CÓDIGO POSTAL:</label>
+                            <input type="text" id="cp" name="cp" class="form-control" placeholder="Codigo postal" maxlength="10" onkeypress="return soloNumeros(event);" value="{{ cliente.cp }}"/>
+                        </div>
+                        <div class="form-group col-xs-12 col-lg-4">
+                            <label for="estado">*ESTADO:</label>
+                            <select class="selectpicker form-control" name="estado" id="estado" data-live-search="true">
+                                <option value="">-- Seleccione --</option>
+                                {% for estado in estados %}
+                                    {% if cliente.id_estado == estado.id_estado %}
+                                        <option value="{{ estado.id_estado }}" selected>{{ estado.estado }}</option>
+                                    {% else %}
+                                        <option value="{{ estado.id_estado }}">{{ estado.estado }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-12 col-lg-5" id="municipios">
+                            <label for="municipio">*DELEGACIÓN/MUNICIPIO:</label>
+                            <select class="selectpicker form-control" name="municipio" id="municipio" data-live-search="true">
+                                <option value="">-- Seleccione --</option>
+                                {% for municipio in municipios %}
+                                    {% if cliente.id_municipio == municipio.id_municipio %}
+                                        <option value="{{ municipio.id_municipio }}" selected>{{ municipio.municipio }}</option>
+                                    {% else %}
+                                        <option value="{{ municipio.id_municipio }}">{{ municipio.municipio }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-lg-6" id="colonias">
+                            <label for="colonia">*COLONIA:</label>
+                            <select class="selectpicker form-control" name="colonia" id="colonia" data-colonia="{{ cliente.id_colonia }}" data-live-search="true">
+                                <option value="">-- Seleccione --</option>
+                                {% for colonia in colonias %}
+                                   {% if cliente.id_colonia == colonia.id_colonia %}
+                                        <option value="{{ colonia.id_colonia }}" selected>{{ colonia.colonia }}</option>
+                                    {% else %}
+                                        <option value="{{ colonia.id_colonia }}">{{ colonia.colonia }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-12 col-lg-6">
+                            <label for="ciudad">CIUDAD:</label>
+                            <input type="text" id="ciudad" name="ciudad" class="form-control" placeholder="Ciudad" maxlength="50" value="{{ cliente.ciudad }}"/>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="form-group">
+                    <button type="button" id="Guardar" class="btn btn-block btn-raised btn-primary"><span class="fa fa-floppy-o"></span><span class="hidden-xs"> Guardar</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('public/js/app_js/Catalogos_ModificarEmisor.js') }}"></script>
+{% endblock %}

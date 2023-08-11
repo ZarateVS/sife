@@ -1,0 +1,68 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    {% for cat in menu if cat.mnu_url == "FacturaManual" %}
+        {% if cat.rol_insert == 1 %}
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background: #3c8dbc">
+                    <h2 align="center" style="color: white;">Factura Manual</h2>
+                </div>
+                <div class="panel-body row">
+                    <br>
+                    <div class="col-xs-12">
+                        {% for dato in datos if datos != 'Sin registros' %}
+                        <br><br>
+                        <div class="table-responsive">
+                        <table class="table" id="dataGrid" cellpadding="0" cellspacing="0" border="0">
+                            <caption style="background: #3c8dbc; color: white; text-align: center;"><span class="fa fa-list-ul"></span><span class="hidden-xs"> Listado</span></caption>
+                            <thead>
+                                <tr>
+                                    <th width="50" align="center">Descargar</th>
+                                    <th width="150">Sucursal</th>
+                                    <th width="50">Serie</th>
+                                    <th width="50">Folio</th>
+                                    <th width="150">Receptor</th>
+                                    <th width="70">Total</th>
+                                    <th width="90">Fecha Facturacion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                    <tr class="success">
+                                        <td align="center">
+                                            <a class="btn btn-raised btn-primary" onclick="descargar('{{ dato.ruta }}.pdf')" title="Descargar"><span class=""></span>PDF</a>
+                                            <a class="btn btn-raised btn-success" onclick="descargar('{{ dato.ruta }}.xml')"><span class=""></span>XML</a>
+                                        </td>
+                                        <td><b>{{ dato.sucursal }} - {{ dato.nombre }}</b></td>
+                                        <td align="center">{{ dato.serie }}</td>
+                                        <td align="center">{{ dato.folio }}</td>
+                                        <td>{{ dato.receptor }}</td>
+                                        <td align="right">{{ dato.total }}</td>
+                                        <td>{{ dato.fechafacturacion }}</td>
+                                    </tr>
+
+                            </tbody>
+                        </table>
+                        </div>
+                        <br><br>
+                        {% else %}
+                            <br><br><br><br>
+                            <div class="text-center">
+                                <h3>El documento sigue en proceso de facturacion. Consulte mas tarde. </h3>
+                            </div>
+                            <br><br><br><br><br>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+            {% include 'FacelecBundle:Default:Alerta1.html.twig' %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/app_js/Facturacion_ReporteFactura.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    {% for cat in menu if cat.mnu_url == "ProductosSucursales" %}
+        {% if cat.rol_insert == 1 %}
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background: #3c8dbc">
+                    <h2 align="center" style="color: white;">Nuevo Producto Sucursal</h2>
+                </div>
+                <div class="panel-body">
+                    <br>
+                    <form id="frmProducto" class="col-lg-6 col-lg-offset-3">
+                        <div class="form-group">
+                            <div class="btn-group btn-group-justified btn-group-raised">
+                                <a href="{{ path('ProductosSucursales') }}" class="btn btn-raised btn-primary"><span class="fa fa-arrow-circle-left"></span><span class="hidden-xs"> Regresar</span></a>
+                                <a id="Limpiar" class="btn btn-raised btn-primary"><span class="glyphicon glyphicon-erase"></span><span class="hidden-xs"> Limpiar</span></a>
+                            </div>
+                        </div>
+                                
+                        <div class="form-group" id="ps">
+                            <label for="cve_prodserv">PRODUCTOS/SERVICIOS:</label>
+                            <select class="form-control selectpicker" name="cve_prodserv" id="cve_prodserv" data-live-search="true">
+                                <option value="">-- Seleccione --</option>
+                                {% for cve_prodserv in cves_prodserv %}
+                                    <option value="{{ cve_prodserv.claveProdServ }}">{{ cve_prodserv.descripcion }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label for="codigo">CÓDIGO:</label>
+                            <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Codigo" maxlength="50" onkeypress="return SoloNumeros(event, 0)"/>
+                        </div>
+                                
+                        <div class="form-group">
+                            <label for="nombre">NOMBRE:</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" maxlength="180"/>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="precio">PRECIO:</label>
+                            <input type="text" id="precio" name="precio" class="form-control" placeholder="Precio" maxlength="15" onkeypress="return SoloNumeros(event, 1)" />
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="iva">IVA:</label>
+                            <input type="text" id="iva" name="iva" class="form-control" placeholder="IVA" maxlength="11" onkeypress="return SoloNumeros(event, 0)"/>
+                        </div>
+                                
+                        <div class="form-group">
+                            <label for="cve_unidad">UNIDADES DE MEDIDA CFDI:</label>
+                            <select class="form-control selectpicker" name="cve_unidad" id="cve_unidad" data-live-search="true">
+                                <option value="">-- Seleccione --</option>
+                                {% for cve_unidad in cves_unidad %}
+                                    <option value="{{ cve_unidad.claveUnidad }}">{{ cve_unidad.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="option">UNIDAD:</label>
+                            <select class="form-control selectpicker" name="unidad" id="unidad">
+                                <option value="">-- Seleccione --</option>
+                                <option value="Metro">Metro</option>
+                                <option value="Kilo">Kilo</option>
+                                <option value="Hora">Hora</option>
+                                <option value="Dia">Dia</option>
+                                <option value="Litro">Litro</option>
+                                <option value="Botella">Botella</option>
+                                <option value="Piezas">Piezas</option>
+                                <option value="Caja">Caja</option>
+                                <option value="s/u">s/u</option>
+                                <option value="No aplica">No aplica</option>
+                            </select>
+                        </div>
+                                
+                        <br>
+                        <div class="form-group" align="center">
+                            <button type="button" id="Guardar" class="btn btn-block btn-raised btn-primary"><span class="fa fa-floppy-o"></span><span class="hidden-xs"> Guardar</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            {% include 'FacelecBundle:Default:Alerta1.html.twig' %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/app_js/Catalogos_AgregarProductoSucursal.js') }}"></script>
+{% endblock %}

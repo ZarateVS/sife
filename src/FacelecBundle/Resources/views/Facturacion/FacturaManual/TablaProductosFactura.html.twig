@@ -1,0 +1,60 @@
+{% for rol in menu if rol.mnu_url == 'FacturaManual' %}
+    <table class="table" cellspacing="0" id="tabprodsfct">
+        <caption style="background: #3c8dbc; color: white; text-align: center;"><span class="fa fa-list-ul"></span><span class="hidden-xs"> Listado</span></caption>
+        <thead>
+            <tr>
+                <td><b>Cantidad</b></td>
+                <td><b>Concepto</b></td>
+                <td align="right"><b>Precio Unitario</b></td>
+                <td align="right"><b>Importe</b></td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+                {% if (item.item % 2) == 0 %}
+                    {% set b = 0 %}
+                    {% set clr = 'outC' %}
+                {% else %}
+                    {% set b = 1 %}
+                    {% set clr = 'outB' %}
+                {% endif %}
+                <tr id="{{ item.item }}" class="{{ clr }}" onmouseover="cmbClr(this.id,true,{{ b }});" onmouseout="cmbClr(this.id,false,{{ b }});" ondblclick="slcI(this.id,{{ b }});">
+                    <td>{{ item.cantidad }}</td>
+                    <td>{{ item.descproducto }}</td>
+                    <td align="right">{{ item.valorunitario }}</td>
+                    <td align="right">{{ item.importe }}</td>
+                </tr>
+            {% endfor %}
+            {% if datos.sbt != 0 %}
+                <tr align="right">
+                    <td></td>
+                    <td></td>
+                    <td style="border-top:2px solid #000000"><b>Subtotal:</b></td>
+                    <td style="border-top:2px solid #000000">{{ datos.sbt }}</td>
+                </tr>
+                <tr align="right">
+                    <td></td>
+                    <td></td>
+                    <td><b>Descuento:</b></td>
+                    <td id="dsc">{{ datos.dsc }}</td>
+                </tr>
+                <tr align="right">
+                    <td></td>
+                    <td></td>
+                    <td><b>IVA:</b></td>
+                    <td>{{ datos.iva }}</td>
+                </tr>
+                <tr align="right">
+                    <td></td>
+                    <td></td>
+                    <td><b>Total:</b></td>
+                    <td>{{ datos.tot }}</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+{% endfor %}
+
+{% block javascripts %}
+    <script src="{{ asset('public/js/app_js/Facturacion_TablaProductosFactura.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="icon" type="image/x-icon" href="{{ asset('public/images/kurigage.png') }}" />
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('public/css/style.css') }}" />
+            <link rel="stylesheet" href="{{ asset('public/css/bootstrap.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('public/css/jquery.toastmessage.css') }}" />
+        {% endblock %}
+    </head>
+    <body>
+        <div id="login">
+            <h5>ADMINISTRACIÓN DE USUARIOS</h5>
+            <fieldset>
+                <form id="form" role="form" name="form">
+                    <div class="form-group">
+                        <label for="usuario">Nombre de usuario:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+                            <input type="email" id="usuario" name="usuario" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
+                            <input type="password" id="password" name="password" class="form-control">
+                        </div>
+                        <a href="">Olvide mi contraseña</a>
+                    </div>
+                    <div class="form-group center">
+                        <script src="https://www.google.com/recaptcha/api.js"></script>
+                        <div id="recaptcha">
+                            <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" class="btn btn-default btn-block" id="Enviar" value="Ingresar">
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+    {% block body %}{% endblock %}
+    {% block javascripts %}
+        <script src="{{ asset('public/js/jquery-3.1.0.js') }}"></script>
+        <script src="{{ asset('public/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('public/js/jquery.toastmessage.js') }}"></script>
+        <script src="{{ asset('public/js/Funciones.js') }}"></script>
+        <script>
+            $(document).ready(function () {
+                $("#usuario").focus();//Te posiciona en la caja de texto de usuario
+            });
+
+            $("#Enviar").click(function () { 
+                $(this).attr('disabled', true);//deshabilita el evento clic del boton
+                var valcorreo = validarEmail($("#usuario").val());//validad los caracteres permitidos para el correo
+                if (valcorreo === "1") {
+                    if ($("#password").val() !== "") {
+                        if (grecaptcha.getResponse() !== '') { //devuelve un nulo si reCaptcha no está validado en el lado del cliente, sino devuelve un valor distinto de null.
+                            $.ajax({
+                                url: "{{ path('Login') }}",
+                                type: 'POST',
+                                data: $(".form-control").serialize(),
+                                success: function (respuesta) {
+                                    if ($.trim(respuesta) == "1") {
+                                        document.location.href = "{{ path('Inicio') }}";
+                                    } else if ($.trim(respuesta) == "0") {
+                                        $().toastmessage('showToast', {
+                                            sticky: true,
+                                            text: 'Usuario o Contraseña incorrecta',
+                                            type: 'error',
+                                            position: 'middle-center',
+                                            close: function () {
+                                                $("#Enviar").attr('disabled', false);
+                                            }
+                                        });
+                                    }
+                                },
+                                error: function () {
+                                    $().toastmessage('showToast', {
+                                        sticky: true,
+                                        text: 'Error.',
+                                        type: 'error',
+                                        position: 'middle-center',
+                                        close: function () {
+                                            $("#Enviar").attr('disabled', false);
+                                        }
+                                    });
+                                }//ERROR del AJAX
+                            });//fin del ajax
+                        } else {
+                            $().toastmessage('showToast', {
+                                text: 'Seleccionar Recaptcha',
+                                sticky: true,
+                                type: 'warning',
+                                position: 'middle-center',
+                                close: function () {
+                                    $("#Enviar").attr('disabled', false);
+                                }
+                            });
+                        }
+                    }//if de la condicion de #password
+                     else {//En este caso la caja de texto de pass esta vacia
+                        $().toastmessage('showToast', {
+                            text: 'Proporcione la contraseña.',
+                            sticky: true,
+                            type: 'warning',
+                            position: 'middle-center',
+                            close: function () {
+                                document.getElementById('password').autofocus;
+                                $("#password").focus();
+                                $("#Enviar").attr('disabled', false);
+                            }
+                        });
+                    }
+                }// fin de la condicion del resultado de la validacion del correo
+                else {// en este caso el correo
+                    $().toastmessage('showToast', {
+                        text: 'El nombre de usuario proporcionado no es valido.',
+                        sticky: true,
+                        type: 'warning',
+                        position: 'middle-center',
+                        close: function () {
+                            $("#usuario").focus();
+                            $("#Enviar").attr('disabled', false);
+                        }
+                    });
+                }
+            });
+        </script>
+    {% endblock %}
+</body>
+</html>

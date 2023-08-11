@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="usuario@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.2">
+    <root id="1"/>
+    <schema id="2" parent="1" name="usuario">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="activo"/>
+    <schema id="4" parent="1" name="corporativo_siif"/>
+    <schema id="5" parent="1" name="information_schema"/>
+    <schema id="6" parent="1" name="mysql"/>
+    <schema id="7" parent="1" name="performance_schema"/>
+    <schema id="8" parent="1" name="recursos humanos"/>
+    <schema id="9" parent="1" name="recursos_humanos"/>
+    <schema id="10" parent="1" name="sys"/>
+    <table id="11" parent="2" name="empresa"/>
+    <table id="12" parent="2" name="pweb_catmnu"/>
+    <table id="13" parent="2" name="pweb_dmn"/>
+    <table id="14" parent="2" name="pweb_mdl"/>
+    <table id="15" parent="2" name="pweb_mdlusr"/>
+    <table id="16" parent="2" name="pweb_mnu"/>
+    <table id="17" parent="2" name="pweb_rol"/>
+    <table id="18" parent="2" name="pweb_rolmnu"/>
+    <table id="19" parent="2" name="pweb_rspnsbl"/>
+    <table id="20" parent="2" name="pweb_sttsusr"/>
+    <table id="21" parent="2" name="pweb_supusr"/>
+    <table id="22" parent="2" name="pweb_usr"/>
+    <table id="23" parent="2" name="pweb_usremp"/>
+    <table id="24" parent="2" name="pweb_usrmnu"/>
+    <table id="25" parent="2" name="sis_bitacora"/>
+    <table id="26" parent="2" name="sis_catmnu"/>
+    <table id="27" parent="2" name="sis_mnu"/>
+    <table id="28" parent="2" name="sis_usrmnu"/>
+    <table id="29" parent="2" name="supervisor"/>
+    <routine id="30" parent="2" name="SPCREARMENU">
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <routine id="31" parent="2" name="SPGETEMPRESAS_ACTIVASXUSUARIO">
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <routine id="32" parent="2" name="SPGETMENUS_ACTXROL">
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <routine id="33" parent="2" name="SPGETZONAS_ACTIVASXUSUARIO">
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <routine id="34" parent="2" name="spListusr">
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <column id="35" parent="11" name="empresa">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="36" parent="11" name="nombre">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <key id="37" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>empresa</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="38" parent="12" name="cat_id">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="39" parent="12" name="cat_nom">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <key id="40" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>cat_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="41" parent="13" name="iddmn">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="42" parent="13" name="dominio">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <key id="43" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>iddmn</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="44" parent="14" name="mdl_id">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="45" parent="14" name="mdl_nom">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="46" parent="14" name="mdl_img">
+      <Position>3</Position>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="47" parent="14" name="mdl_ext">
+      <Position>4</Position>
+      <DataType>tinyint(4)|0</DataType>
+    </column>
+    <column id="48" parent="14" name="mdl_ws_pdt">
+      <Position>5</Position>
+      <DataType>smallint(6)|0</DataType>
+    </column>
+    <column id="49" parent="14" name="mdl_ws_wsdl">
+      <Position>6</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="50" parent="14" name="mdl_mnu_dflt">
+      <Position>7</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <key id="51" parent="14" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>mdl_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="52" parent="15" name="idusr">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="53" parent="15" name="mdl_id">
+      <Position>2</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="54" parent="15" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idusr
+mdl_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="55" parent="16" name="mnu_id">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="56" parent="16" name="mnu_url">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="57" parent="16" name="mnu_nom">
+      <Position>3</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="58" parent="16" name="mnu_cat">
+      <Position>4</Position>
+      <DataType>smallint(6)|0</DataType>
+    </column>
+    <column id="59" parent="16" name="mnu_sis">
+      <Position>5</Position>
+      <DataType>smallint(6)|0</DataType>
+    </column>
+    <column id="60" parent="16" name="hlp">
+      <Position>6</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="61" parent="16" name="hlp_url">
+      <Position>7</Position>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <column id="62" parent="16" name="activo">
+      <Position>8</Position>
+      <DataType>tinyint(4)|0</DataType>
+    </column>
+    <index id="63" parent="16" name="fkmnucat-pweb_mnu">
+      <ColNames>mnu_cat</ColNames>
+    </index>
+    <index id="64" parent="16" name="fkmnusis-pweb_mnu">
+      <ColNames>mnu_sis</ColNames>
+    </index>
+    <key id="65" parent="16" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>mnu_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="66" parent="16" name="fkmnucat-pweb_mnu">
+      <ColNames>mnu_cat</ColNames>
+      <RefSchemaName>usuario</RefSchemaName>
+      <RefTableName>pweb_catmnu</RefTableName>
+      <RefColNames>cat_id</RefColNames>
+    </foreign-key>
+    <foreign-key id="67" parent="16" name="fkmnusis-pweb_mnu">
+      <ColNames>mnu_sis</ColNames>
+      <RefSchemaName>usuario</RefSchemaName>
+      <RefTableName>pweb_mdl</RefTableName>
+      <RefColNames>mdl_id</RefColNames>
+    </foreign-key>
+    <column id="68" parent="17" name="idrol">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="69" parent="17" name="nombrerol">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="70" parent="17" name="activo">
+      <Position>3</Position>
+      <DataType>tinyint(4)|0</DataType>
+    </column>
+    <key id="71" parent="17" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idrol</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="72" parent="18" name="idrol">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="73" parent="18" name="mdl_id">
+      <Position>2</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="74" parent="18" name="mnu_id">
+      <Position>3</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="75" parent="18" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idrol
+mdl_id
+mnu_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="76" parent="19" name="mdl_id">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="77" parent="19" name="mnu_id">
+      <Position>2</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="78" parent="19" name="idusr">
+      <Position>3</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="79" parent="19" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idusr
+mnu_id
+mdl_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="80" parent="20" name="idcmb">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="81" parent="20" name="usrcmb">
+      <Position>2</Position>
+      <DataType>smallint(6)|0</DataType>
+    </column>
+    <column id="82" parent="20" name="stts">
+      <Position>3</Position>
+      <DataType>tinyint(4)|0</DataType>
+    </column>
+    <column id="83" parent="20" name="usrsol">
+      <Position>4</Position>
+      <DataType>smallint(6)|0</DataType>
+    </column>
+    <column id="84" parent="20" name="razon">
+      <Position>5</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="85" parent="20" name="usr">
+      <Position>6</Position>
+      <DataType>smallint(6)|0</DataType>
+    </column>
+    <column id="86" parent="20" name="fch">
+      <Position>7</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <key id="87" parent="20" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idcmb</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="88" parent="21" name="idusr">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="89" parent="21" name="clave">
+      <Position>2</Position>
+      <DataType>char(4)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="90" parent="21" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idusr
+clave</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="91" parent="22" name="idusr">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="92" parent="22" name="nomusr">
+      <Position>2</Position>
+      <DataType>varchar(70)|0</DataType>
+    </column>
+    <column id="93" parent="22" name="usr">
+      <Position>3</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="94" parent="22" name="usrNCPTD">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="95" parent="22" name="pass">
+      <Position>5</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="96" parent="22" name="tipo">
+      <Position>6</Position>
+      <DataType>smallint(6)|0</DataType>
+    </column>
+    <column id="97" parent="22" name="mail">
+      <Position>7</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="98" parent="22" name="activo">
+      <Position>8</Position>
+      <DataType>smallint(6)|0</DataType>
+    </column>
+    <column id="99" parent="22" name="reset">
+      <Position>9</Position>
+      <DataType>smallint(6)|0</DataType>
+    </column>
+    <column id="100" parent="22" name="corporativo">
+      <Position>10</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="101" parent="22" name="usuario">
+      <ColNames>usr
+usrNCPTD</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="102" parent="22" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idusr</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="103" parent="22" name="usuario">
+      <ColNames>usr
+usrNCPTD</ColNames>
+      <UnderlyingIndexName>usuario</UnderlyingIndexName>
+    </key>
+    <column id="104" parent="23" name="idusr">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="105" parent="23" name="empresa">
+      <Position>2</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="106" parent="23" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idusr
+empresa</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="107" parent="24" name="idusr">
+      <Position>1</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="108" parent="24" name="mnu_id">
+      <Position>2</Position>
+      <DataType>smallint(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="109" parent="24" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idusr
+mnu_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="110" parent="25" name="id_bitacora">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="111" parent="25" name="idusr">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="112" parent="25" name="id_mnu">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="113" parent="25" name="fch_bitacora">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="114" parent="25" name="accion">
+      <Position>5</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="115" parent="25" name="detalle">
+      <Position>6</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <index id="116" parent="25" name="fkidmnu-bitacora">
+      <ColNames>id_mnu</ColNames>
+    </index>
+    <key id="117" parent="25" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_bitacora</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="118" parent="25" name="fkidmnu-bitacora">
+      <ColNames>id_mnu</ColNames>
+      <RefSchemaName>usuario</RefSchemaName>
+      <RefTableName>sis_mnu</RefTableName>
+      <RefColNames>id_mnu</RefColNames>
+    </foreign-key>
+    <column id="119" parent="26" name="id_cat">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="120" parent="26" name="nombre">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="121" parent="26" name="icono">
+      <Position>3</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <key id="122" parent="26" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_cat</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="123" parent="27" name="id_mnu">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="124" parent="27" name="mnu_url">
+      <Position>2</Position>
+      <DataType>varchar(1000)|0</DataType>
+    </column>
+    <column id="125" parent="27" name="mnu_nom">
+      <Position>3</Position>
+      <DataType>varchar(500)|0</DataType>
+    </column>
+    <column id="126" parent="27" name="id_cat">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="127" parent="27" name="orden">
+      <Position>5</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="128" parent="27" name="submenu">
+      <Position>6</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <index id="129" parent="27" name="id_cat-sismnu">
+      <ColNames>id_cat</ColNames>
+    </index>
+    <key id="130" parent="27" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_mnu</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="131" parent="27" name="id_cat-sismnu">
+      <ColNames>id_cat</ColNames>
+      <RefSchemaName>usuario</RefSchemaName>
+      <RefTableName>sis_catmnu</RefTableName>
+      <RefColNames>id_cat</RefColNames>
+    </foreign-key>
+    <column id="132" parent="28" name="id_mnu">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="133" parent="28" name="idusr">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="134" parent="28" name="rol_consulta">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="135" parent="28" name="rol_insert">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="136" parent="28" name="rol_update">
+      <Position>5</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="137" parent="28" name="rol_delete">
+      <Position>6</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <key id="138" parent="28" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_mnu
+idusr</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="139" parent="28" name="fkidmnu-usrmnu">
+      <ColNames>id_mnu</ColNames>
+      <RefSchemaName>usuario</RefSchemaName>
+      <RefTableName>sis_mnu</RefTableName>
+      <RefColNames>id_mnu</RefColNames>
+    </foreign-key>
+    <column id="140" parent="29" name="clave">
+      <Position>1</Position>
+      <DataType>char(4)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="141" parent="29" name="nombre">
+      <Position>2</Position>
+      <DataType>varchar(40)|0</DataType>
+    </column>
+    <key id="142" parent="29" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>clave</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <argument id="143" parent="30" name="USRID">
+      <DataType>int(11)|0</DataType>
+    </argument>
+    <argument id="144" parent="31" name="USR">
+      <DataType>int(11)|0</DataType>
+    </argument>
+    <argument id="145" parent="32" name="MDL">
+      <DataType>int(11)|0</DataType>
+    </argument>
+    <argument id="146" parent="32" name="ROL">
+      <DataType>int(11)|0</DataType>
+    </argument>
+    <argument id="147" parent="33" name="USR">
+      <DataType>int(11)|0</DataType>
+    </argument>
+  </database-model>
+</dataSource>

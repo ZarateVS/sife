@@ -1,0 +1,44 @@
+{% for rol in menu if rol.mnu_url == 'Colonia' %}
+        <table class="table table-bordered display nowrap" cellspacing="0" id="table">
+            <caption style="background: #3c8dbc; color: white; text-align: center;"><span class="fa fa-list-ul"></span><span class="hidden-xs"> LISTADO DE COLONIAS</span></caption> 
+            <thead>
+                <tr>
+                    <th>Colonia</th>
+                    <th>Ciudad</th>
+                    <th>Código Postal</th>
+                    {% if rol.rol_delete == 1 %}
+                        <th>Activo</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for colonia in colonias %}
+                    {% set clase = "danger" %}
+                    {% set checked = "unchecked" %}
+                    {% if colonia.activo == 1 %}
+                        {% set clase = "success" %}
+                        {% set checked = "checked" %}
+                    {% endif %}
+                    <tr class="{{ clase }}">
+                        <td>
+                            {% if colonia.activo == 1 and rol.rol_update == 1 %}
+                                <a id="Modificar" data-id_col="{{ colonia.id_colonia }}" data-id_edo="{{ colonia.id_estado }}" style="cursor: pointer;">{{ colonia.colonia }}</a>
+                            {% else %}
+                                {{ colonia.colonia }}
+                            {% endif %}
+                        </td>
+                        <td>{{ colonia.ciudad }}</td>
+                        <td>{{ colonia.codigoPostal }}</td>
+                        {% if rol.rol_delete == 1 %}
+                            <td><input type="checkbox" id="activar_desactivar" data-id="{{ colonia.id_colonia }}" data-nombre="{{ colonia.colonia }}" {{ checked }} /></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+{% endfor %}
+                        
+{% block javascript %}
+    <script src="{{ asset('public/js/app_js/Catalogos_TablaColonias.js') }}"></script>
+{% endblock %}

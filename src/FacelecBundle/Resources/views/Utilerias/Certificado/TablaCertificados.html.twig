@@ -1,0 +1,36 @@
+{% for rol in menu if rol.mnu_url == 'Certificado' %}
+    <table class="table table-bordered display nowrap" cellspacing="0" id="table">
+        <caption style="background: #3c8dbc; color: white; text-align: center;"><span class="fa fa-list-ul"></span><span class="hidden-xs"> LISTADO DE COLONIAS</span></caption> 
+        <thead>
+            <tr>
+                <th>No Certificado</th>
+                <th>Valido Desde</th>
+                <th>Valido Hasta</th>
+                <th>Estatus</th>
+                <th>Archivos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for certificado in certificados %}
+                {% if certificado.vig_fin < date %}
+                    {% set estatus = 'Inactivo' %}
+                    {% set clase = 'danger' %}
+                {% else %}
+                    {% set estatus = 'Activo' %}
+                    {% set clase = 'success' %}
+                {% endif %}
+                <tr class="{{ clase }}">
+                    <td>{{ certificado.no_cert }}</td>
+                    <td>{{ certificado.vig_ini }}</td>
+                    <td>{{ certificado.vig_fin }}</td>
+                    <td>{{ estatus }}</td>
+                    <td><a id="Descargar" data-id="{{ certificado.idcertificado }}" style="cursor: pointer;">Descargar</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endfor %}
+                        
+{% block javascript %}
+    <script src="{{ asset('public/js/app_js/Utilerias_TablaCertificados.js') }}"></script>
+{% endblock %}

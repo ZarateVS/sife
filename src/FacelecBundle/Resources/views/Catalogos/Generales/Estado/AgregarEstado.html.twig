@@ -1,0 +1,43 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block contenido %}
+    {% for cat in menu if cat.mnu_url == "Estado" %}
+        {% if cat.rol_insert == 1 %}
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="background: #3c8dbc">
+                <h2 align="center" style="color: white;">Nuevo Estado</h2>
+            </div>
+            <div class="panel-body">
+                <br>
+                <div id="r" class="r">
+                <form id="frmEstado" class="col-md-6 col-md-offset-3">
+                    <div class="btn-group btn-group-justified btn-group-raised">
+                        <a href="{{ path('Estado') }}" class="btn btn-raised btn-primary"><span class="fa fa-arrow-circle-left"></span><span class="hidden-xs"> Regresar</span></a>
+                        <a id="Limpiar" class="btn btn-raised btn-primary"><span class="glyphicon glyphicon-erase"></span><span class="hidden-xs"> Limpiar</span></a>
+                    </div>
+                    <br>
+                        <div class="form-group">
+                            <label for="nombre">NOMBRE:</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Estado" maxlength="50"/>
+                        </div>
+                        
+                        <br>
+                        <div class="form-group" align="center">
+                            <button type="button" id="Guardar" class="btn btn-block btn-raised btn-primary"><span class="fa fa-floppy-o"></span><span class="hidden-xs"> Guardar</span></button>
+                        </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/js/app_js/Catalogos_AgregarEstado.js') }}"></script>
+{% endblock %}

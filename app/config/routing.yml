@@ -1,0 +1,4 @@
+facelec:
+    resource: "@FacelecBundle/Controller/"
+    type:     annotation
+    prefix:   /
